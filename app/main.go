@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -20,26 +21,16 @@ func nextInt() int {
 
 func main() {
 	sc.Split(bufio.ScanWords)
-	N := nextInt()
-	a := make([][]int, N)
-	for i := 0; i < N; i++ {
-		var arr []int
-		for j := 0; j < i+1; j++ {
-			if j == 0 || j == i {
-				arr = append(arr, 1)
-			} else {
-				arr = append(arr, a[i-1][j-1]+a[i-1][j])
+	a := nextInt()
+	b := nextInt()
+	c := nextInt()
 
-			}
-		}
-		a[i] = arr
-	}
+	arr := []int{a, b, c}
+	sort.Ints(arr)
 
-	for _, i := range a {
-		for _, j := range i {
-			fmt.Print(j)
-			fmt.Print(" ")
-		}
-		fmt.Println()
+	if arr[1] == b {
+		fmt.Print("Yes")
+	} else {
+		fmt.Print("No")
 	}
 }
