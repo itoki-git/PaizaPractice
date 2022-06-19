@@ -3,9 +3,10 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
-	"sort"
 	"strconv"
+	"strings"
 )
 
 var sc = bufio.NewScanner(os.Stdin)
@@ -19,18 +20,42 @@ func nextInt() int {
 	return i
 }
 
+type Mark struct {
+	startY int
+	startX int
+	endY   int
+	endX   int
+}
+
 func main() {
 	sc.Split(bufio.ScanWords)
+
 	a := nextInt()
 	b := nextInt()
-	c := nextInt()
-
-	arr := []int{a, b, c}
-	sort.Ints(arr)
-
-	if arr[1] == b {
-		fmt.Print("Yes")
-	} else {
-		fmt.Print("No")
+	arr := make([][]string, a)
+	for i := 0; i < a; i++ {
+		sc.Scan()
+		input := strings.Split(sc.Text(), "")
+		arr[i] = input
 	}
+	count := 0
+	var mark Mark
+
+	for i := 0; i < a; i++ {
+		for j := 0; j < b; j++ {
+			if arr[i][j] == "o" {
+				if count == 0 {
+					count++
+					mark.startX = j
+					mark.startY = i
+				} else {
+					mark.endX = j
+					mark.endY = i
+				}
+			}
+		}
+	}
+	result := math.Abs(float64(mark.startY-mark.endY)) + math.Abs(float64(mark.startX-mark.endX))
+	fmt.Print(result)
+
 }
