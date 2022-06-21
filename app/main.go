@@ -4,29 +4,26 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
 	"strings"
 )
 
 var sc = bufio.NewScanner(os.Stdin)
 
-func nextInt() int {
-	sc.Scan()
-	i, e := strconv.Atoi(sc.Text())
-	if e != nil {
-		panic(e)
-	}
-	return i
-}
-
-func toCharStr(i int) string {
-	return string('A' - 1 + i)
-}
-
 func main() {
 	sc.Split(bufio.ScanWords)
 
-	a := nextInt()
-	fmt.Print(strings.ToLower(toCharStr(a - 96)))
+	sc.Scan()
+	N := sc.Text()
+	var before = map[string]string{"A": "4", "E": "3", "G": "6", "I": "1", "O": "0", "S": "5", "Z": "2"}
+
+	strArray := strings.Split(N, "")
+
+	for _, str := range strArray {
+		if val, ok := before[str]; ok {
+			fmt.Print(val)
+		} else {
+			fmt.Print(str)
+		}
+	}
 
 }
