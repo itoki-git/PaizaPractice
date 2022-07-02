@@ -18,32 +18,20 @@ func nextInt() int {
 	return i
 }
 
-func Merge(left, right []int) []int {
-	var result []int
-	for len(left) > 0 && len(right) > 0 {
-		if left[0] < right[0] {
-			result = append(result, left[0])
-			left = right[1:]
-		} else {
-			result = append(result, right[0])
-			right = left[1:]
+func BubbleSort(arr []int) []int {
+	for i := 1; i < len(arr); i++ {
+		for j := 0; j < len(arr)-i; j++ {
+			if arr[j] > arr[j+1] {
+				arr[j], arr[j+1] = arr[j+1], arr[j]
+			}
+			fmt.Println(arr)
 		}
-	}
-	return append(result, append(left, right...)...)
-}
-
-func MergeSort(arr []int) []int {
-	if len(arr) > 1 {
-		n := len(arr) / 2
-		arr = Merge(MergeSort(arr[:n]), MergeSort(arr[n:]))
-		fmt.Println(arr)
 	}
 	return arr
 }
 
 func main() {
 	sc.Split(bufio.ScanWords)
-	sc.Scan()
 	// 数式
 	length := nextInt()
 
@@ -52,6 +40,6 @@ func main() {
 		arr = append(arr, nextInt())
 	}
 
-	fmt.Println(MergeSort(arr))
+	fmt.Println(BubbleSort(arr))
 
 }
