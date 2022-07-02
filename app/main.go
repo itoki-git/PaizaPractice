@@ -18,14 +18,22 @@ func nextInt() int {
 	return i
 }
 
-func BubbleSort(arr []int) []int {
-	for i := 1; i < len(arr); i++ {
-		for j := 0; j < len(arr)-i; j++ {
-			if arr[j] > arr[j+1] {
-				arr[j], arr[j+1] = arr[j+1], arr[j]
-			}
-			fmt.Println(arr)
+func Min(arr []int) int {
+	min := arr[0]
+	result := 0
+	for index, value := range arr {
+		if min > value {
+			min = value
+			result = index
 		}
+	}
+	return result
+}
+
+func SelectionSort(arr []int) []int {
+	for i := 0; i < len(arr); i++ {
+		index := Min(arr[i:])
+		arr[i], arr[i+index] = arr[i+index], arr[i]
 	}
 	return arr
 }
@@ -40,6 +48,6 @@ func main() {
 		arr = append(arr, nextInt())
 	}
 
-	fmt.Println(BubbleSort(arr))
+	fmt.Println(SelectionSort(arr))
 
 }
