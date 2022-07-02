@@ -4,26 +4,54 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
+	"strconv"
 )
 
 var sc = bufio.NewScanner(os.Stdin)
 
-func main() {
-	sc.Split(bufio.ScanWords)
-
+func nextInt() int {
 	sc.Scan()
-	N := sc.Text()
-	var before = map[string]string{"A": "4", "E": "3", "G": "6", "I": "1", "O": "0", "S": "5", "Z": "2"}
+	i, e := strconv.Atoi(sc.Text())
+	if e != nil {
+		panic(e)
+	}
+	return i
+}
 
-	strArray := strings.Split(N, "")
-
-	for _, str := range strArray {
-		if val, ok := before[str]; ok {
-			fmt.Print(val)
+func Merge(left, right []int) []int {
+	var result []int
+	for len(left) > 0 && len(right) > 0 {
+		if left[0] < right[0] {
+			result = append(result, left[0])
+			left = right[1:]
 		} else {
-			fmt.Print(str)
+			result = append(result, right[0])
+			right = left[1:]
 		}
 	}
+	return append(result, append(left, right...)...)
+}
+
+func MergeSort(arr []int) []int {
+	if len(arr) > 1 {
+		n := len(arr) / 2
+		arr = Merge(MergeSort(arr[:n]), MergeSort(arr[n:]))
+		fmt.Println(arr)
+	}
+	return arr
+}
+
+func main() {
+	sc.Split(bufio.ScanWords)
+	sc.Scan()
+	// 数式
+	length := nextInt()
+
+	var arr []int
+	for i := 0; i < length; i++ {
+		arr = append(arr, nextInt())
+	}
+
+	fmt.Println(MergeSort(arr))
 
 }
